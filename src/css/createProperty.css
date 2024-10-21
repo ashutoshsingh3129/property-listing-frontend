@@ -1,0 +1,91 @@
+/* CreateProperty.css */
+
+/* Form container */
+.create-property-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .create-property-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input[type="text"]:focus,
+  .form-group input[type="number"]:focus {
+    border-color: #3498db;
+  }
+  
+  /* Checkbox styling */
+  .form-group input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  /* Button styling */
+  .submit-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .submit-button:active {
+    background-color: #1d6fa5;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .create-property-form {
+      padding: 15px;
+    }
+  
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+      font-size: 14px;
+    }
+  
+    .submit-button {
+      font-size: 16px;
+    }
+  }
+  
