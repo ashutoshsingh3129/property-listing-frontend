@@ -52,4 +52,25 @@ form {
       width: 90%;
     }
   }
+  .right {
+    position: absolute;
+    top: 10px; /* Adjust this value based on your design */
+    right: 10px; /* Adjust this value based on your design */
+  }
+  
+  .primary-button {
+    background-color: #007bff; /* Primary blue color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .primary-button:hover {
+    background-color: #0056b3; /* Darker shade of blue for hover */
+  }
+  
   

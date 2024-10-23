@@ -1,0 +1,93 @@
+/* Modal Background Overlay */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Content Box */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh; /* Set a maximum height for scrolling */
+    overflow-y: auto; /* Enable vertical scroll if content exceeds height */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Modal Header */
+  .modal-content h2 {
+    margin-top: 0; /* Remove default margin to keep things aligned */
+    font-size: 24px;
+  }
+  
+  /* Form Fields */
+  .modal-content form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-content label {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .modal-content input[type="text"],
+  .modal-content input[type="number"],
+  .modal-content input[type="file"],
+  .modal-content input[type="checkbox"],
+  .modal-content textarea {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Buttons */
+  .modal-content button {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .modal-content button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .modal-content button[type="button"] {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .modal-content button[type="button"]:hover {
+    background-color: #d32f2f;
+  }
+  
+  .modal-content button[type="submit"]:hover {
+    background-color: #388e3c;
+  }
+  
+  /* Make the form more responsive */
+  @media screen and (max-width: 600px) {
+    .modal-content {
+      width: 95%;
+    }
+  }
+  

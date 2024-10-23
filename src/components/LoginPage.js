@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import '../css/login.css';
 import { axiosRequest } from '../service/axiosRequest';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const { user, logout ,login} = useContext(AuthContext); 
 
+  const navigate=useNavigate()
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +27,12 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosRequest("POST",'/api/auth/login', formData)//await axios.post('/api/login', formData);
+      const response = await axiosRequest("POST",'/api/auth/login', formData)
         console.log("rrr",response)
         localStorage.setItem('token',response.token)
+        login(response)
+        if(response.role==="admin") navigate('/admin')
+        else navigate('/')
       // Redirect or perform post-login actions here
     } catch (error) {
       console.error('Login failed:', error);
@@ -63,6 +70,7 @@ const LoginPage = () => {
         </div>
 
         <button type="submit" className="submit-button">Login</button>
+         No account?<Link to='/signup' style={{color:'blue'}}>Create a account</Link>
       </form>
     </div>
   );

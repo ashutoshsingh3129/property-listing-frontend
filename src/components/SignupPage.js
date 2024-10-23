@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import '../css/signup.css';
 import { axiosRequest } from '../service/axiosRequest';
+import { Link, useNavigate } from 'react-router-dom';
+
 const SignupPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-
+  const navigate=useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -12,6 +14,7 @@ const SignupPage = () => {
      // await axios.post('/api/auth/signup', formData);
       if(res?.token){
         localStorage.setItem('token',res.token)
+        navigate('/')
       }
       console.log('User signed up:', res.data);
     } catch (error) {
@@ -20,6 +23,7 @@ const SignupPage = () => {
   };
 
   return (
+    <> <Link to='/login' className='right primary-button'>Login</Link>
     <form onSubmit={handleSubmit}>
       <input
         type="text"
@@ -37,7 +41,9 @@ const SignupPage = () => {
         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
       />
       <button type="submit">Sign Up</button>
+      Already have account?<Link to='/login' style={{color:'blue'}}>Login</Link>
     </form>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { axiosRequest } from '../service/axiosRequest';
+import { axiosRequest } from '../service/axiosRequest'; // Assuming you have this Axios instance setup
 import * as PANOLENS from 'panolens'; // Panolens.js library
 import '../css/propertyDetails.css';
 
@@ -31,7 +31,6 @@ const PropertyDetailsPage = () => {
       image.onload = () => {
         console.log('Panoramic image successfully preloaded.');
 
-        // Initialize Panolens only if the container is available
         if (panoContainerRef.current) {
           const panorama = new PANOLENS.ImagePanorama(imageUrl);
 
@@ -43,7 +42,6 @@ const PropertyDetailsPage = () => {
 
           viewer.add(panorama);
 
-          // Use addEventListener for load and error events
           panorama.addEventListener('load', () => {
             console.log('Panoramic image successfully loaded in Panolens.');
             setLoadingPano(false);
@@ -55,11 +53,6 @@ const PropertyDetailsPage = () => {
             setLoadingPano(false);
             setPanoError(true);
           });
-
-          // Optional: Check if the panorama is loaded correctly
-          console.log('Panorama is now set up and should be visible.');
-        } else {
-          console.warn('Pano container is not available when initializing Panolens.');
         }
       };
 
@@ -71,8 +64,21 @@ const PropertyDetailsPage = () => {
     }
   }, [property]);
 
-  const handleBook = (propertyId, amount) => {
-    navigate('/payment', { state: { propertyId, amount } });
+  const handleBook = async (propertyId, amount,name) => {
+    try {
+      const bookingDate = new Date(); // You can change this based on when the user is booking
+      const response = await axiosRequest('POST', '/api/bookings', {
+        propertyId,
+        date: bookingDate, // Assuming booking for the current date
+      });
+
+      // Handle successful booking
+    //  alert('Booking successful! Redirecting to payment...');
+      navigate('/payment', { state: { propertyId, amount ,propertyName:name} }); // Navigate to payment page with propertyId and amount
+    } catch (error) {
+      console.error('Error booking property:', error);
+      alert('Failed to book the property. Please try again.');
+    }
   };
 
   return (
@@ -84,9 +90,7 @@ const PropertyDetailsPage = () => {
           {/* Panoramic Viewer */}
           {property.image ? (
             <div style={{ marginBottom: '20px' }}>
-              <h3>360° View</h3>
 
-              {/* Show loading spinner or error message */}
               {loadingPano && <p>Loading 360° view...</p>}
               {panoError && <p>Error loading panoramic view.</p>}
 
@@ -106,12 +110,12 @@ const PropertyDetailsPage = () => {
 
           {/* Property Details */}
           <div style={{ zIndex: 1, position: 'relative' }}>
-            <p>Price: {property.price}</p>
+            <p>Price: ₹{property.price}</p>
             <p>Location: {property.location}</p>
             <p>Amenities: {property.amenities.join(', ')}</p>
 
             <button
-              onClick={() => handleBook(property._id, property.price)}
+              onClick={() => handleBook(property._id, property.price,property.name)}
               style={{ cursor: 'pointer', zIndex: 1 }}
             >
               Book Now
