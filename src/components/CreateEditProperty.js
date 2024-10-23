@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../css/createEditProperty.css'
+
 const CreateEditProperty = ({ property, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
     location: '',
-    availability: true,
+    availability: true, // Default to true for creation
     amenities: '',
     image: null,
   });
@@ -17,8 +18,8 @@ const CreateEditProperty = ({ property, onClose, onSave }) => {
         name: property.name || '',
         price: property.price || '',
         location: property.location || '',
-        availability: property.availability || true,
-        amenities: property.amenities.join(', ') || '',
+        availability: property.availability !== undefined ? property.availability : true,
+        amenities: property.amenities ? property.amenities.join(', ') : '',
         image: property.image || null,
       });
     }
@@ -38,9 +39,11 @@ const CreateEditProperty = ({ property, onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Ensure amenities are always sent as an array
     const updatedProperty = {
       ...formData,
       amenities: formData.amenities.split(',').map(a => a.trim()),
+      availability: formData.availability,  // Explicitly sending the availability value
     };
     onSave(updatedProperty); // Pass updated property data to the save handler
   };
@@ -52,16 +55,30 @@ const CreateEditProperty = ({ property, onClose, onSave }) => {
         <form onSubmit={handleSubmit}>
           <label>Name:</label>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+          
           <label>Price:</label>
           <input type="number" name="price" value={formData.price} onChange={handleChange} required />
+          
           <label>Location:</label>
           <input type="text" name="location" value={formData.location} onChange={handleChange} required />
-          <label>Availability:</label>
-          <input type="checkbox" name="availability" checked={formData.availability} onChange={handleChange} />
+          
+          <div className="checkbox-wrapper">
+          <label>Availability</label>
+
+  <input
+    type="checkbox"
+    name="availability"
+    checked={formData.availability}
+    onChange={handleChange}
+  />
+</div>
+          
           <label>Amenities (comma separated):</label>
           <input type="text" name="amenities" value={formData.amenities} onChange={handleChange} />
+          
           <label>Image:</label>
           <input type="file" onChange={handleFileChange} />
+          
           <button type="submit">{property ? 'Update' : 'Create'}</button>
           <button type="button" onClick={onClose}>Cancel</button>
         </form>

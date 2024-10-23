@@ -83,6 +83,21 @@
   .modal-content button[type="submit"]:hover {
     background-color: #388e3c;
   }
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .checkbox-wrapper input[type="checkbox"] {
+    margin: 0;
+    vertical-align: middle;
+  }
+  
+  .checkbox-wrapper label {
+    margin: 0;
+  }
+  
   
   /* Make the form more responsive */
   @media screen and (max-width: 600px) {

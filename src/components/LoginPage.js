@@ -1,18 +1,17 @@
+// LoginPage.js
 import React, { useContext, useState } from 'react';
-import axios from 'axios';
 import '../css/login.css';
 import { axiosRequest } from '../service/axiosRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-  const { user, logout ,login} = useContext(AuthContext); 
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');    // Error state
+  const [success, setSuccess] = useState(''); // Success state
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const navigate=useNavigate()
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,18 +24,29 @@ const LoginPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');    // Clear previous error
+    setSuccess('');  // Clear previous success message
 
     try {
-      const response = await axiosRequest("POST",'/api/auth/login', formData)
-        console.log("rrr",response)
-        localStorage.setItem('token',response.token)
-        login(response)
-        if(response.role==="admin") navigate('/admin')
-        else navigate('/')
-      // Redirect or perform post-login actions here
+      const response = await axiosRequest("POST", '/api/auth/login', formData);
+      
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        login(response);
+
+        if (response.role === "admin") {
+          setSuccess('Login successful! Redirecting to admin page...');
+          setTimeout(() => navigate('/admin'), 2000); // Redirect after 2 seconds
+        } else {
+          setSuccess('Login successful! Redirecting...');
+          setTimeout(() => navigate('/'), 2000); // Redirect after 2 seconds
+        }
+      } else {
+        setError('Login failed. Invalid credentials.');
+      }
     } catch (error) {
       console.error('Login failed:', error);
-      alert('Login failed. Please check your credentials.');
+      setError('An error occurred. Please check your credentials and try again.');
     }
   };
 
@@ -70,7 +80,14 @@ const LoginPage = () => {
         </div>
 
         <button type="submit" className="submit-button">Login</button>
-         No account?<Link to='/signup' style={{color:'blue'}}>Create a account</Link>
+
+        {/* Error message */}
+        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
+
+        {/* Success message */}
+        {success && <p className="success-message" style={{ color: 'green' }}>{success}</p>}
+
+        <p>No account? <Link to='/signup' style={{ color: 'blue' }}>Create an account</Link></p>
       </form>
     </div>
   );

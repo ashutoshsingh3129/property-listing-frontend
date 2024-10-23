@@ -49,7 +49,8 @@ const AdminDashboard = () => {
     formData.append('price', updatedProperty.price);
     formData.append('location', updatedProperty.location);
     formData.append('amenities', updatedProperty.amenities);
-    
+    formData.append('availability', updatedProperty.availability);
+
     // Append image if it exists
     if (updatedProperty.image) {
       formData.append('image', updatedProperty.image);
@@ -66,6 +67,7 @@ const AdminDashboard = () => {
       // Create mode
       const res = await axiosRequest('POST', '/api/properties', formData);
       setProperties([...properties, res.data]);
+    
     }
     closeModal(); // Close modal after saving
   };
@@ -100,14 +102,14 @@ const AdminDashboard = () => {
       <button onClick={openCreateModal} className="create-button w-56 mr-24">Create New Property</button>
       <div className="property-grid">
         {properties.map((property) => (
-          <div key={property._id} className="property-card">
-            <img src={`${process.env.REACT_APP_API_BASE_URL}/${property.image}`} alt={property.name} className="property-image" />
-            <h3>{property.name}</h3>
-            <p>Price: ₹{property.price}</p>
-            <p>Location: {property.location}</p>
-            <button onClick={() => viewProperty(property._id)}>view Details</button>
+          <div key={property?._id} className="property-card">
+            <img src={`${process.env.REACT_APP_API_BASE_URL}/${property?.image}`} alt={property?.name} className="property-image" />
+            <h3>{property?.name}</h3>
+            <p>Price: ₹{property?.price}</p>
+            <p>Location: {property?.location}</p>
+            <button onClick={() => viewProperty(property?._id)}>view Details</button>
             <button onClick={() => openEditModal(property)}>Edit</button>
-            <button onClick={() => deleteProperty(property._id)}>Delete</button>
+            <button onClick={() => deleteProperty(property?._id)}>Delete</button>
           </div>
         ))}
       </div>

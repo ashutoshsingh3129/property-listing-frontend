@@ -7,9 +7,9 @@ import SignupPage from './components/SignupPage';
 import PropertyDetailsPage from './components/PropertyDetailsPage';
 import PropertyListingPage from './components/PropertyListingPage';
 import AdminDashboard from './components/AdminDashboard';
-import CreateProperty from './components/CreatePropery';
 import LoginPage from './components/LoginPage';
 import AdminRoute from './components/AdminRoute';
+import CreateEditProperty from './components/CreateEditProperty';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
 
           {/* Protect Admin Routes */}
           <Route path="/admin" element={<AdminRoute element={<AdminDashboard />} />} />
-          <Route path="/create" element={<AdminRoute element={<CreateProperty />} />} />
+          <Route path="/create" element={<AdminRoute element={<CreateEditProperty />} />} />
         </Routes>
       </Router>
     </AuthProvider>
