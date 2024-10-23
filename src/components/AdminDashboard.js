@@ -73,7 +73,7 @@ const AdminDashboard = () => {
   };
 
   const deleteProperty = async (id) => {
-    await axiosRequest("DELETE", `/api/admin/properties/${id}`);
+    await axiosRequest("DELETE", `/api/properties/${id}`);
     setProperties(properties.filter((property) => property._id !== id));
   };
   useEffect(() => {
